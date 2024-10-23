@@ -280,7 +280,7 @@ export function UserRegistration() {
                   <TextField
                     id="password-field"
                     name="password-id"
-                    type="text"
+                    type="password"
                     fullWidth
                     label="Password"
                     variant="standard"
@@ -295,7 +295,7 @@ export function UserRegistration() {
                   <TextField
                     id="confirm-password-field"
                     name="confirm-password-id"
-                    type="text"
+                    type="password"
                     fullWidth
                     label="Confirm Password"
                     variant="standard"
