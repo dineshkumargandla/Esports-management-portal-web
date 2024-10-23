@@ -66,29 +66,6 @@ export function UserRegistration() {
           <CardBody className="px-lg-5">
             <Form role="form">
               <FormGroup className="mb-3">
-                {/* <Row className="align-items-center justify-content-xl-between">
-                  <Col xl="6">
-                    <TextField
-                      id="full-name-field"
-                      name="full-name"
-                      type="text"
-                      fullWidth
-                      label="Full Name"
-                      variant="standard"
-                    />
-                  </Col>
-                  <Col xl="6">
-                    <TextField
-                      id="gender-field"
-                      name="gender"
-                      type="dropdown"
-                      fullWidth
-                      label="Gender"
-                      variant="standard"
-                    />
-                  </Col>
-                </Row> */}
-
                 <Box
                   sx={{ display: "flex", alignItems: "flex-end" }}
                   className="mb-4"
