@@ -62,13 +62,12 @@ export const Registration = (props) => {
               y="0"
             >
               <polygon
-                className="bg-gradient-danger fill-default-reg"
+                className="bg-gradient-light"
                 points="2560 0 2560 100 0 100"
               />
             </svg>
           </div>
         </div>
-        {/* Page content */}
         <Container className="mt--8 pb-5">
           <Row className="justify-content-center">
             <Routes>
