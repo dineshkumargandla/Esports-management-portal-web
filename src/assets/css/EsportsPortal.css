@@ -14304,6 +14304,27 @@ button.bg-lighter:focus {
   background: linear-gradient(87deg, #11cdef 0, #1171ef 100%) !important;
 }
 
+.bg-gradient-top-background {
+  background-image: url("../img/2151113198.jpg") !important;
+}
+
+.firstUserRegistration,
+.secondUserRegistration{
+  --s:100px;
+  height:300px;
+}
+
+.firstUserRegistration {
+  background:red;
+}
+
+.secondUserRegistration {
+  background:green;
+  /* a little smaller than --s to create a gap */
+  margin-top: calc(var(--s) * -1  + 10px);
+  clip-path:polygon(0 0,100% var(--s),100% 100%,0 100%);
+}
+
 .bg-gradient-warning {
   background: linear-gradient(87deg, #fb6340 0, #fbb140 100%) !important;
 }
@@ -14596,7 +14617,7 @@ button.section-darker:focus {
 }
 
 .bg-gradient-info {
-  background: linear-gradient(87deg, #11cdef 0, #1171ef 100%) !important;
+  background: linear-gradient(87deg, #11cdef 0, #f56036 100%) !important;
 }
 
 .bg-gradient-warning {
@@ -14697,6 +14718,9 @@ button.section-darker:focus {
 
 .fill-default {
   fill: #172b4d;
+}
+.fill-default-reg {
+  fill: #2dce89;
 }
 
 .stroke-default {
