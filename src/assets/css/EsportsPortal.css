@@ -21537,4 +21537,18 @@ button:focus,
   margin-right: 10px;
 }
 
-/*# sourceMappingURL=argon-dashboard-react.css.map */
+.simple-linear {
+  background: linear-gradient(blue, pink);
+}
+
+.textcolor{
+  color: white;
+}
+
+.modal-header {
+  color: white;
+}
+
+.modal-title .h4{
+  color: white;
+}

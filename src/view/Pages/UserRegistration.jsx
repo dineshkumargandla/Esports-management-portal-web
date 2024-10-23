@@ -7,48 +7,119 @@ import {
   Form,
   Col,
   Row,
-  Input,
 } from "reactstrap";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import {
-  EmailOutlined,
-  PasswordOutlined,
   LoginOutlined,
 } from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import { deepOrange, amber, indigo } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
-import Divider from "@mui/material/Divider";
-
+import dayjs, { Dayjs } from "dayjs";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import EditCalendarRoundedIcon from "@mui/icons-material/EditCalendarRounded";
-import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
-import IconButton from "@mui/material/IconButton";
-import dayjs from "dayjs";
+import {UserRegistrationFormValidations} from "../Validations/UserRegistrationFormValidations.jsx"
+import { ModelPopUp } from "../../Common/ModelPopupErrorValidation.jsx";
 export function UserRegistration() {
   const [gender, setGender] = React.useState("");
+  const [fullName, setName] = React.useState("");
+  const [dateOfBirth, setDate] = React.useState(dayjs());
+  const [age, setUserAge] = React.useState();
+  const [aadharNumber, setAadharNumber] = React.useState();
+  const [passportNumber, setPassportNumber] = React.useState("");
+  const [contactNumber, setContactNumber] = React.useState();
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
+  const [showSucesssModal, setshowSucesssModal] = React.useState(false);
+  const [modalShow, setModalShow] = React.useState(false);
+  const [errorMessages, setErrorMessages] = React.useState(new Array());
+  var errors = new Array();
+  const handleFullNameChange = (e) => {
+    setName(e.target.value);
+  };
 
-  const handleChange = (event) => {
+  const handleGenderChange = (event) => {
     setGender(event.target.value);
   };
 
+  const handleDate = (e) => {
+    var date = new Date(e.$d);
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+    setDate(day + "/" + month + "/" + year);
+    setUserAge(calculateAge(year));
+  };
+
+  function calculateAge(year) {
+    const currentYear = dayjs().year();
+    let userAge = currentYear - year;
+    return userAge;
+  }
+
+  const handleAadharNumber = (e) => {
+    setAadharNumber(e.target.value);
+  };
+
+  const handlePassportNumber = (e) => {
+    setPassportNumber(e.target.value);
+  };
+
+  const handleContactNumber = (e) => {
+    setContactNumber(parseInt(e.target.value));
+  };
+
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+  };
+  const handleConfirmPassword = (e) => {
+    setConfirmPassword(e.target.value);
+  };
+
+  const handleUserRegistration = (e) => {
+    e.preventDefault();
+    const userRegistrationFormData = {
+      age,
+      gender,
+      dateOfBirth,
+      fullName,
+      email,
+      password,
+      contactNumber,
+      aadharNumber,
+      passportNumber,
+      confirmPassword
+    };
+    errors = UserRegistrationFormValidations(userRegistrationFormData);
+    setErrorMessages(errors);
+    if(errors.length > 0){
+      setModalShow(true);
+      console.log(errors);
+    }else{
+      console.log(userRegistrationFormData);
+    }
+  };
+
   const UserRegistrationButton = styled(Button)(({ theme }) => ({
-    disableElevation:true,
+    disableElevation: true,
     color: theme.palette.getContrastText(deepOrange[500]),
     backgroundColor: deepOrange[500],
-    '&:hover': {
+    "&:hover": {
       backgroundColor: deepOrange[700],
     },
-    size:"small"
+    size: "small",
   }));
 
   return (
@@ -77,6 +148,8 @@ export function UserRegistration() {
                     fullWidth
                     label="Full Name"
                     variant="standard"
+                    onChange={handleFullNameChange}
+                    value={fullName}
                   />
                 </Box>
                 <Box
@@ -89,7 +162,7 @@ export function UserRegistration() {
                       labelId="gender-standard-label"
                       id="gender-select-standard"
                       value={gender}
-                      onChange={handleChange}
+                      onChange={handleGenderChange}
                       label="Gender"
                     >
                       <MenuItem value="">
@@ -112,7 +185,8 @@ export function UserRegistration() {
                           <DatePicker
                             label="Date of Birth"
                             format="DD/MM/YYYY"
-                            variant="standard"
+                            onChange={handleDate}
+
                           />
                         </DemoContainer>
                       </LocalizationProvider>
@@ -125,15 +199,21 @@ export function UserRegistration() {
                       type="text"
                       fullWidth
                       label="Age"
-                      variant="standard"
                       disabled
+                      variant="standard"
+                      slotProps={{
+                        inputLabel: {
+                          shrink: true,
+                        },
+                      }}
+                      value={dateOfBirth ? age : ""}                      
                     />
                   </Col>
                 </Row>
                 <Box
                   sx={{ display: "flex", alignItems: "flex-end" }}
-                   className="mb-4"
-                 >
+                  className="mb-4"
+                >
                   <TextField
                     id="aadhar-number-field"
                     name="aadhar-number"
@@ -141,6 +221,9 @@ export function UserRegistration() {
                     fullWidth
                     label="Aadhar Number"
                     variant="standard"
+                    onChange={handleAadharNumber}
+                    value={aadharNumber}
+                    
                   />
                 </Box>
 
@@ -155,6 +238,8 @@ export function UserRegistration() {
                     fullWidth
                     label="Passport Number"
                     variant="standard"
+                    value={passportNumber}
+                    onChange={handlePassportNumber}
                   />
                 </Box>
                 <Box
@@ -168,9 +253,11 @@ export function UserRegistration() {
                     fullWidth
                     label="Contact Number"
                     variant="standard"
+                    value={contactNumber}
+                    onChange={handleContactNumber}
                   />
-                </Box>        
-                
+                </Box>
+
                 <Box
                   sx={{ display: "flex", alignItems: "flex-end" }}
                   className="mb-4"
@@ -182,6 +269,8 @@ export function UserRegistration() {
                     fullWidth
                     label="Email"
                     variant="standard"
+                    value={email}
+                    onChange={handleEmail}
                   />
                 </Box>
                 <Box
@@ -195,6 +284,8 @@ export function UserRegistration() {
                     fullWidth
                     label="Password"
                     variant="standard"
+                    value={password}
+                    onChange={handlePassword}
                   />
                 </Box>
                 <Box
@@ -208,13 +299,26 @@ export function UserRegistration() {
                     fullWidth
                     label="Confirm Password"
                     variant="standard"
+                    value={confirmPassword}
+                    onChange={handleConfirmPassword}
                   />
                 </Box>
               </FormGroup>
-               <Box className="text-center">
-                <UserRegistrationButton variant="contained" className="mb-2 w-75">
-                <LoginOutlined  className="fa-fw me-5" />Login As User</UserRegistrationButton>
-              </Box>              
+              <Box className="text-center">
+                <UserRegistrationButton
+                  variant="contained"
+                  className="mb-2 w-75"
+                  onClick={handleUserRegistration}
+                >
+                  <LoginOutlined className="fa-fw me-5" />
+                  Login As User
+                </UserRegistrationButton>
+              </Box>
+              <ModelPopUp
+                show={modalShow}
+                errormessage={errorMessages}
+                onHide={() => setModalShow(false)}
+              />
             </Form>
           </CardBody>
         </Card>
