@@ -10,9 +10,7 @@ import {
 } from "reactstrap";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import {
-  LoginOutlined,
-} from "@mui/icons-material";
+import { LoginOutlined } from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import { deepOrange, amber, indigo } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
@@ -25,8 +23,9 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import {UserRegistrationFormValidations} from "../Validations/UserRegistrationFormValidations.jsx"
+import { UserRegistrationFormValidations } from "../Validations/UserRegistrationFormValidations.jsx";
 import { ModelPopUp } from "../../Common/ModelPopupErrorValidation.jsx";
+
 export function UserRegistration() {
   const [gender, setGender] = React.useState("");
   const [fullName, setName] = React.useState("");
@@ -100,14 +99,14 @@ export function UserRegistration() {
       contactNumber,
       aadharNumber,
       passportNumber,
-      confirmPassword
+      confirmPassword,
     };
     errors = UserRegistrationFormValidations(userRegistrationFormData);
     setErrorMessages(errors);
-    if(errors.length > 0){
+    if (errors.length > 0) {
       setModalShow(true);
       console.log(errors);
-    }else{
+    } else {
       console.log(userRegistrationFormData);
     }
   };
@@ -186,7 +185,6 @@ export function UserRegistration() {
                             label="Date of Birth"
                             format="DD/MM/YYYY"
                             onChange={handleDate}
-
                           />
                         </DemoContainer>
                       </LocalizationProvider>
@@ -206,7 +204,7 @@ export function UserRegistration() {
                           shrink: true,
                         },
                       }}
-                      value={dateOfBirth ? age : ""}                      
+                      value={dateOfBirth ? age : ""}
                     />
                   </Col>
                 </Row>
@@ -223,7 +221,6 @@ export function UserRegistration() {
                     variant="standard"
                     onChange={handleAadharNumber}
                     value={aadharNumber}
-                    
                   />
                 </Box>
 
