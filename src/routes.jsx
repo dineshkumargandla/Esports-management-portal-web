@@ -3,6 +3,10 @@
 // import Maps from "views/Pages/Maps.js";
 // import Register from "views/Pages/Register.js";
 import {Login} from "./view/Pages/Login";
+import {UserRegistration} from "./view/Pages/UserRegistration";
+import {OrgRegistration} from "./view/Pages/OrgRegistration";
+
+
 // import Tables from "views/Pages/Tables.js";
 // import Icons from "views/Pages/Icons.js";
 
@@ -49,12 +53,18 @@ var routes = [
     component: <Login />,
     layout: "/auth",
   },
-  // {
-  //   path: "/register",
-  //   name: "Register",
-  //   icon: "ni ni-circle-08 text-pink",
-  //   component: <Register />,
-  //   layout: "/auth",
-  // },
+  {
+    path: "/user-registration",
+    name: "User Registration",
+    component: <UserRegistration />,
+    layout: "/registration",
+  },
+
+  {
+    path: "/org-registration",
+    name: "Organization Registration",
+    component: <OrgRegistration />,
+    layout: "/registration",
+  },
 ];
 export default routes;

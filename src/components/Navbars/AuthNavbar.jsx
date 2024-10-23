@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import React from "react";
 import {
   UncontrolledCollapse,
@@ -19,21 +18,32 @@ import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import Stack from "@mui/material/Stack";
+import { useNavigate } from "react-router-dom";
 import {
   AppRegistration,
   Person2Outlined,
   Key,
   BungalowOutlined,
-  StadiumOutlined
+  StadiumOutlined,
 } from "@mui/icons-material";
 
 export const AuthNavbar = () => {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
+  const navigate = useNavigate();
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleUserRegistration = (event) => {
+    navigate("/registration/user-registration");
+    handleClose(event);
+  };
+
+  const handleOrgRegistration = (event) => {
+    navigate("/registration/org-registration");
+    handleClose(event);
   };
 
   const handleClose = (event) => {
@@ -153,20 +163,22 @@ export const AuthNavbar = () => {
                         aria-labelledby="composition-button"
                         onKeyDown={handleListKeyDown}
                       >
-                        <MenuItem onClick={handleClose}>
+                        <MenuItem
+                          onClick={handleUserRegistration}
+                        >
                           <ListItemIcon>
                             <Person2Outlined fontSize="small" />
                           </ListItemIcon>
                           User Registration
                         </MenuItem>
-                        <MenuItem onClick={handleClose}>
-                        <ListItemIcon>
+                        <MenuItem onClick={handleOrgRegistration}>
+                          <ListItemIcon>
                             <BungalowOutlined fontSize="small" />
                           </ListItemIcon>
                           Organization Registration
                         </MenuItem>
                         <MenuItem onClick={handleClose}>
-                        <ListItemIcon>
+                          <ListItemIcon>
                             <StadiumOutlined fontSize="small" />
                           </ListItemIcon>
                           TO Registration

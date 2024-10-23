@@ -12,43 +12,14 @@ import { deepOrange,amber,indigo } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
 import Divider from "@mui/material/Divider";
 
-
-const UserLoginButton = styled(Button)(({ theme }) => ({
-  disableElevation:true,
-  color: theme.palette.getContrastText(deepOrange[500]),
-  backgroundColor: deepOrange[500],
-  '&:hover': {
-    backgroundColor: deepOrange[700],
-  },
-  size:"small"
-}));
-
-const OrgLoginButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.getContrastText(amber[500]),
-  backgroundColor: amber[500],
-  '&:hover': {
-    backgroundColor: amber[700],
-  },
-}));
-
-const TOLoginButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.getContrastText(indigo[500]),
-  backgroundColor: indigo[500],
-  '&:hover': {
-    backgroundColor: indigo[700],
-  },
-}));
-export const Login = () => {
-  function handleLoginForm(event) {
-    console.log("Login Form");
-  }
+export function OrgRegistration() {
   return (
     <>
-      <Col lg="5" md="7">
+    <Col lg="5" md="7">
         <Card className="bg-secondary shadow border-0">
           <CardHeader className="bg-transparent pb-5">
             <div className="text-muted text-center">
-              <h2>Sign in as user</h2>
+              <h2>Organisation Registration</h2>
             </div>
           </CardHeader>
           <CardBody className="px-lg-5">
@@ -88,7 +59,7 @@ export const Login = () => {
                 </a>
               </div>
               </FormGroup>
-              <Box className="text-center">
+              {/* <Box className="text-center">
                 <UserLoginButton variant="contained" className="mb-2 w-75">
                 <LoginOutlined  className="fa-fw me-5" />Login As User</UserLoginButton>
               </Box>
@@ -101,7 +72,7 @@ export const Login = () => {
               <Box className="text-center">
                 <TOLoginButton variant="contained" className=" mb-2 w-75">
                 <LoginOutlined  className="fa-fw me-5" />Login As TO</TOLoginButton>
-              </Box>
+              </Box> */}
              
             </Form>
           </CardBody>
@@ -109,4 +80,4 @@ export const Login = () => {
       </Col>
     </>
   );
-};
+}
