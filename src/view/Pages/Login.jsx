@@ -50,6 +50,7 @@ export const Login = () => {
   const [jwtToken, setToken] = React.useState("");
   const navigate = useNavigate();
   let formErrors = new Array();
+  let authValidationErrors = new Array();
   let authToken = "";
 
   const handleEmail = (event) => {
@@ -68,15 +69,24 @@ export const Login = () => {
       setModalShow(true);
     } else {
       console.log(loginFormData);
-      try {
         validateUserLoginAuth(loginFormData).then((response) => {
-          authToken = response.token;
-          localStorage.setItem("authToken", authToken);
-          localStorage.setItem("role", response.role);
+            authToken = response.token;
+            localStorage.setItem("authToken", authToken);
+            localStorage.setItem("role", response.role);
+        }).catch((error) => {
+          setModalShow(true);
+          if(error.status === 401){
+            authValidationErrors.push("Invalid Credentials,please check the credentials and try again");
+          }
+          if(error.status === 404){
+            authValidationErrors.push("User "+loginFormData.email+" not found in the data base, Please register and try again.");
+          }
+
+          if(error.status === 500){
+            authValidationErrors.push("Backend Service not found");
+          }
+          setErrorMessage(authValidationErrors);
         });
-      } catch (error) {
-        console.log("asdasdsadasd"+error);
-      }
     }
   }
   return (
