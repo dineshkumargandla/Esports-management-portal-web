@@ -14,7 +14,7 @@ import Divider from "@mui/material/Divider";
 import { LoginFormValidations } from "../Validations/LoginFormValidations.jsx";
 import { useNavigate } from "react-router-dom";
 import { ModelPopUp } from "../../Common/ModelPopupErrorValidation.jsx";
-import { validateUserLoginAuth } from "../../api/LoginAuthEndpoints";
+import { validateUserLoginAuth,ValidateOrgLoginAuth } from "../../api/LoginAuthEndpoints";
 
 const UserLoginButton = styled(Button)(({ theme }) => ({
   disableElevation: true,
@@ -69,26 +69,72 @@ export const Login = () => {
       setModalShow(true);
     } else {
       console.log(loginFormData);
-        validateUserLoginAuth(loginFormData).then((response) => {
-            authToken = response.token;
-            localStorage.setItem("authToken", authToken);
-            localStorage.setItem("role", response.role);
-        }).catch((error) => {
+      validateUserLoginAuth(loginFormData)
+        .then((response) => {
+          authToken = response.token;
+          localStorage.setItem("authToken", authToken);
+          localStorage.setItem("role", response.role);
+        })
+        .catch((error) => {
           setModalShow(true);
-          if(error.status === 401){
-            authValidationErrors.push("Invalid Credentials,please check the credentials and try again");
+          if (error.status === 401) {
+            authValidationErrors.push(
+              "Invalid Credentials,please check the credentials and try again"
+            );
           }
-          if(error.status === 404){
-            authValidationErrors.push("User "+loginFormData.email+" not found in the data base, Please register and try again.");
+          if (error.status === 404) {
+            authValidationErrors.push(
+              "User " +
+                loginFormData.email +
+                " not found in the data base, Please register and try again."
+            );
           }
 
-          if(error.status === 500){
+          if (error.status === 500) {
             authValidationErrors.push("Backend Service not found");
           }
           setErrorMessage(authValidationErrors);
         });
     }
   }
+
+  function handleOrganizationLoginForm(event) {
+    const loginFormData = { email, password };
+    formErrors = LoginFormValidations(loginFormData);
+    if (formErrors.length > 0) {
+      setErrorMessage(formErrors);
+      setModalShow(true);
+    } else {
+      console.log(loginFormData);
+      ValidateOrgLoginAuth(loginFormData)
+        .then((response) => {
+          authToken = response.token;
+          localStorage.setItem("authToken", authToken);
+          localStorage.setItem("role", response.role);
+        })
+        .catch((error) => {
+          setModalShow(true);
+          if (error.status === 401) {
+            authValidationErrors.push(
+              "Invalid Credentials,please check the credentials and try again"
+            );
+          }
+          if (error.status === 404) {
+            authValidationErrors.push(
+              "User " +
+                loginFormData.email +
+                " not found in the data base, Please register and try again."
+            );
+          }
+
+          if (error.status === 500) {
+            authValidationErrors.push("Backend Service not found");
+          }
+          setErrorMessage(authValidationErrors);
+        });
+    }
+  }
+
   return (
     <>
       <Col lg="5" md="7">
@@ -156,7 +202,11 @@ export const Login = () => {
               </Box>
               <Divider className="mb-4" />
               <Box className="text-center">
-                <OrgLoginButton variant="contained" className="mb-2 w-75">
+                <OrgLoginButton
+                  variant="contained"
+                  className="mb-2 w-75"
+                  onClick={handleOrganizationLoginForm}
+                >
                   <LoginOutlined className="fa-fw me-5" />
                   Login As Organization
                 </OrgLoginButton>

@@ -7,6 +7,6 @@ export const validateUserLoginAuth = async (data) => {
 }
 export const ValidateOrgLoginAuth = async (data) => {
     const response = await axios.post(`${BASE_URL}/org/login`, data);
-    return response.data;
+    return response;
 }
 
