@@ -1,11 +1,3 @@
-/* --------------------------------
-
-Nucleo Outline Web Font - nucleoapp.com/
-License - nucleoapp.com/license/
-Created using IcoMoon - icomoon.io
-
--------------------------------- */
-
 @font-face {
   font-family: 'Nucleo';
   src: url('../fonts/nucleo.eot');
@@ -13,10 +5,6 @@ Created using IcoMoon - icomoon.io
   font-weight: normal;
   font-style: normal;
 }
-
-/*------------------------
-	base class definition
--------------------------*/
 
 .tim-icons {
   display: inline-block;

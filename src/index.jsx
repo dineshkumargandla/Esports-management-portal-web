@@ -10,10 +10,15 @@ import "assets/demo/demo.css";
 import {Auth} from "./layouts/Auth.jsx";
 import {Registration} from "./layouts/Registration.jsx";
 import {UserDashBoard} from "./layouts/UserDashBoard.jsx";
+import "assets/css/nucleo-icons.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
-
+import ThemeContextWrapper from "./components/ThemeWrapper/ThemeWrapper";
+import BackgroundColorWrapper from "./components/BackgroundColorWrapper/BackgroundColorWrapper";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
+  <ThemeContextWrapper>
+    <BackgroundColorWrapper>
   <BrowserRouter>
     <Routes>
       <Route path="/auth/*" element={<Auth />} />
@@ -22,4 +27,6 @@ root.render(
       <Route path="*" element={<Navigate to="/auth/login" replace />} />
     </Routes>
   </BrowserRouter>
+  </BackgroundColorWrapper>
+  </ThemeContextWrapper>
 );
