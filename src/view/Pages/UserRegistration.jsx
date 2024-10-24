@@ -14,7 +14,7 @@ import { LoginOutlined } from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import { deepOrange, amber, indigo } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -25,6 +25,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { UserRegistrationFormValidations } from "../Validations/UserRegistrationFormValidations.jsx";
 import { ModelPopUp } from "../../Common/ModelPopupErrorValidation.jsx";
+import { registerUser } from "../../api/RegistrationEndpoint";
+import { ModelPopupUserSucess } from "../../Common/ModelPopupUserSucess.jsx";
 
 export function UserRegistration() {
   const [gender, setGender] = React.useState("");
@@ -40,7 +42,9 @@ export function UserRegistration() {
   const [showSucesssModal, setshowSucesssModal] = React.useState(false);
   const [modalShow, setModalShow] = React.useState(false);
   const [errorMessages, setErrorMessages] = React.useState(new Array());
+
   var errors = new Array();
+  var userRegistrationErrors = new Array();
   const handleFullNameChange = (e) => {
     setName(e.target.value);
   };
@@ -107,7 +111,21 @@ export function UserRegistration() {
       setModalShow(true);
       console.log(errors);
     } else {
-      console.log(userRegistrationFormData);
+      registerUser(userRegistrationFormData)
+        .then((response) => {
+          setshowSucesssModal(true);
+          localStorage.setItem("warCode", response.warCode);
+          localStorage.setItem("role", response.role);
+        })
+        .catch((error) => {
+          setModalShow(true);
+          if (error.status === 409) {
+            userRegistrationErrors.push(
+              "There is a conflict please check with a differet email id"
+            );
+          }
+          setErrorMessages(userRegistrationErrors);
+        });
     }
   };
 
@@ -315,6 +333,11 @@ export function UserRegistration() {
                 show={modalShow}
                 errormessage={errorMessages}
                 onHide={() => setModalShow(false)}
+              />
+              <ModelPopupUserSucess
+                show={showSucesssModal}
+                code ={localStorage.getItem("warCode")}
+                onHide={() => setshowSucesssModal(false)}
               />
             </Form>
           </CardBody>

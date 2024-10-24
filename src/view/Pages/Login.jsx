@@ -105,7 +105,6 @@ export const Login = () => {
       setErrorMessage(formErrors);
       setModalShow(true);
     } else {
-      console.log(loginFormData);
       ValidateOrgLoginAuth(loginFormData)
         .then((response) => {
           authToken = response.token;
