@@ -34,6 +34,7 @@
         "@mui/x-date-pickers": "^7.21.0",
         "@react-md/button": "^5.1.6",
         "ajv": "^8.16.0",
+        "axios": "^1.7.7",
         "bootstrap": "4.6.2",
         "classnames": "2.3.2",
         "dayjs": "^1.11.13",
@@ -54,7 +55,8 @@
     "devDependencies": {
         "cross-env": "^7.0.3",
         "gulp": "4.0.2",
-        "gulp-append-prepend": "1.0.9"
+        "gulp-append-prepend": "1.0.9",
+        "webpack-cli": "^5.1.4"
     },
     "optionalDependencies": {
         "eslint-plugin-flowtype": "8.0.3",
