@@ -9,9 +9,7 @@ import "assets/scss/EsportsPortal.scss";
 import {Auth} from "./layouts/Auth.jsx";
 import {Registration} from "./layouts/Registration.jsx";
 
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
-
 root.render(
   <BrowserRouter>
     <Routes>

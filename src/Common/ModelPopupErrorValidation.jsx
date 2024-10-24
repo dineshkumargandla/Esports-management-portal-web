@@ -12,20 +12,15 @@ export function ModelPopUp(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header className = "d-flex justify-content-center bg-gradient-dark">
-        <Modal.Title className = "textcolor" id="contained-modal-title-vcenter" >
-          Please check the following Validation
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body className = "bg-gradient-light">
+      <Modal.Body>
         <ul>
           {props.errormessage.map((item) => {
             return <li>{item}</li>;
           })}
         </ul>
       </Modal.Body>
-      <Modal.Footer className = "bg-gradient-dark">
-        <Button variant="outlined" onClick={props.onHide}>
+      <Modal.Footer>
+        <Button variant="outlined"  color="error" onClick={props.onHide}>
         <Close className="fa-fw me-5" />
           Close
         </Button>

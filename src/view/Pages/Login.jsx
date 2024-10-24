@@ -8,25 +8,28 @@ import {
   LoginOutlined,
 } from "@mui/icons-material";
 import Button from "@mui/material/Button";
-import { deepOrange,amber,indigo } from '@mui/material/colors';
-import { styled } from '@mui/material/styles';
+import { deepOrange, amber, indigo } from "@mui/material/colors";
+import { styled } from "@mui/material/styles";
 import Divider from "@mui/material/Divider";
-
+import { LoginFormValidations } from "../Validations/LoginFormValidations.jsx";
+import { useNavigate } from "react-router-dom";
+import { ModelPopUp } from "../../Common/ModelPopupErrorValidation.jsx";
+import { validateUserLoginAuth } from "../../api/LoginAuthEndpoints";
 
 const UserLoginButton = styled(Button)(({ theme }) => ({
-  disableElevation:true,
+  disableElevation: true,
   color: theme.palette.getContrastText(deepOrange[500]),
   backgroundColor: deepOrange[500],
-  '&:hover': {
+  "&:hover": {
     backgroundColor: deepOrange[700],
   },
-  size:"small"
+  size: "small",
 }));
 
 const OrgLoginButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(amber[500]),
   backgroundColor: amber[500],
-  '&:hover': {
+  "&:hover": {
     backgroundColor: amber[700],
   },
 }));
@@ -34,13 +37,57 @@ const OrgLoginButton = styled(Button)(({ theme }) => ({
 const TOLoginButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(indigo[500]),
   backgroundColor: indigo[500],
-  '&:hover': {
+  "&:hover": {
     backgroundColor: indigo[700],
   },
 }));
+
 export const Login = () => {
-  function handleLoginForm(event) {
-    console.log("Login Form");
+  const [email, setEmail] = React.useState();
+  const [password, setPassword] = React.useState();
+  const [errorMessages, setErrorMessage] = React.useState(new Array());
+  const [modalShow, setModalShow] = React.useState(false);
+  const [jwtToken, setToken] = React.useState("");
+  const navigate = useNavigate();
+  let formErrors = new Array();
+  let authValidationErrors = new Array();
+  let authToken = "";
+
+  const handleEmail = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePassword = (event) => {
+    setPassword(event.target.value);
+  };
+
+  function handleUserLoginForm(event) {
+    const loginFormData = { email, password };
+    formErrors = LoginFormValidations(loginFormData);
+    if (formErrors.length > 0) {
+      setErrorMessage(formErrors);
+      setModalShow(true);
+    } else {
+      console.log(loginFormData);
+        validateUserLoginAuth(loginFormData).then((response) => {
+            authToken = response.token;
+            localStorage.setItem("authToken", authToken);
+            localStorage.setItem("role", response.role);
+        }).catch((error) => {
+          setModalShow(true);
+          if(error.status === 401){
+            authValidationErrors.push("Invalid Credentials,please check the credentials and try again");
+          }
+          if(error.status === 404){
+            authValidationErrors.push("User "+loginFormData.email+" not found in the data base, Please register and try again.");
+          }
+
+          if(error.status === 500){
+            authValidationErrors.push("Backend Service not found");
+          }
+          setErrorMessage(authValidationErrors);
+        });
+    }
   }
   return (
     <>
@@ -54,7 +101,10 @@ export const Login = () => {
           <CardBody className="px-lg-5">
             <Form role="form">
               <FormGroup className="mb-3">
-                <Box sx={{ display: "flex", alignItems: "flex-end" }} className="mb-4">
+                <Box
+                  sx={{ display: "flex", alignItems: "flex-end" }}
+                  className="mb-4"
+                >
                   <EmailOutlined
                     sx={{ color: "action.active", mr: 1, my: 0.5 }}
                   />
@@ -65,10 +115,15 @@ export const Login = () => {
                     fullWidth
                     label="Email"
                     variant="standard"
+                    value={email}
+                    onChange={handleEmail}
                   />
                 </Box>
 
-                <Box sx={{ display: "flex", alignItems: "flex-end" }} className="mb-4">
+                <Box
+                  sx={{ display: "flex", alignItems: "flex-end" }}
+                  className="mb-4"
+                >
                   <PasswordOutlined
                     sx={{ color: "action.active", mr: 1, my: 0.5 }}
                   />
@@ -79,30 +134,45 @@ export const Login = () => {
                     fullWidth
                     label="Password"
                     variant="standard"
-                    
+                    value={password}
+                    onChange={handlePassword}
                   />
                 </Box>
                 <div className="text-right">
-                <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                  <small>Reset password?</small>
-                </a>
-              </div>
+                  <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                    <small>Reset password?</small>
+                  </a>
+                </div>
               </FormGroup>
               <Box className="text-center">
-                <UserLoginButton variant="contained" className="mb-2 w-75">
-                <LoginOutlined  className="fa-fw me-5" />Login As User</UserLoginButton>
+                <UserLoginButton
+                  variant="contained"
+                  className="mb-2 w-75"
+                  onClick={handleUserLoginForm}
+                >
+                  <LoginOutlined className="fa-fw me-5" />
+                  Login As User
+                </UserLoginButton>
               </Box>
-              <Divider className="mb-4"/>
+              <Divider className="mb-4" />
               <Box className="text-center">
                 <OrgLoginButton variant="contained" className="mb-2 w-75">
-                <LoginOutlined  className="fa-fw me-5" />Login As Organization</OrgLoginButton>
+                  <LoginOutlined className="fa-fw me-5" />
+                  Login As Organization
+                </OrgLoginButton>
               </Box>
-              <Divider className="mb-4"/>
+              <Divider className="mb-4" />
               <Box className="text-center">
                 <TOLoginButton variant="contained" className=" mb-2 w-75">
-                <LoginOutlined  className="fa-fw me-5" />Login As TO</TOLoginButton>
+                  <LoginOutlined className="fa-fw me-5" />
+                  Login As TO
+                </TOLoginButton>
               </Box>
-             
+              <ModelPopUp
+                show={modalShow}
+                errormessage={errorMessages}
+                onHide={() => setModalShow(false)}
+              />
             </Form>
           </CardBody>
         </Card>
