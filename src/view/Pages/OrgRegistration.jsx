@@ -10,10 +10,13 @@ import { deepOrange} from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
 import { ModelPopUp } from "../../Common/ModelPopupErrorValidation.jsx";
 import { OrganizationRegistrationFormValidations } from "../Validations/OrganizationRegistrationFormValidations.jsx";
+import { registerOrganization } from "../../api/RegistrationEndpoint";
+import { ModelPopupOrganizationSucess } from "../../Common/ModelPopupOrganizationSucess";
+
 export function OrgRegistration() {
   const [organizationName, setOrganizationName] = React.useState("");
   const [organizationOwner, setOrganizationOwner] = React.useState("");
-  const [organizationEmail, setOrganizationEmail] = React.useState("");
+  const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [contactNumber, setContactNumber] = React.useState("");
@@ -36,7 +39,7 @@ export function OrgRegistration() {
   };
 
   const handleOrganizationEmail = (event) => {
-    setOrganizationEmail(event.target.value);
+    setEmail(event.target.value);
   };
 
   const handlePassword = (event) => {
@@ -67,7 +70,7 @@ export function OrgRegistration() {
     const registrationFormData = {
       organizationName,
       organizationOwner,
-      organizationEmail,
+      email,
       password,
       contactNumber,
       organizationRegNumber,
@@ -80,7 +83,22 @@ export function OrgRegistration() {
     if (errors.length > 0) {
       setModalShow(true);    
     } else {
-     console.log(registrationFormData); 
+      registerOrganization(registrationFormData)
+      .then((response) => {
+        setshowSucesssModal(true);
+        localStorage.setItem("organizationCode", response.organizationCode);
+        localStorage.setItem("role", response.role);
+      })
+      .catch((error) => {
+        // setModalShow(true);
+        // if (error.status === 409) {
+        //   userRegistrationErrors.push(
+        //     "There is a conflict please check with a differet email id"
+        //   );
+        // }
+        // setErrorMessages(userRegistrationErrors);
+        console.log(error);
+      });
     }
   };
 
@@ -193,7 +211,7 @@ export function OrgRegistration() {
                     fullWidth
                     label="Organization Email"
                     variant="standard"
-                    value={organizationEmail}
+                    value={email}
                 onChange={handleOrganizationEmail}
                   />
                 </Box>
@@ -233,6 +251,11 @@ export function OrgRegistration() {
                 show={modalShow}
                 errormessage={errorMessages}
                 onHide={() => setModalShow(false)}
+              />
+              <ModelPopupOrganizationSucess
+                show={showSucesssModal}
+                code ={localStorage.getItem("organizationCode")}
+                onHide={() => setshowSucesssModal(false)}
               />
             </Form>
           </CardBody>

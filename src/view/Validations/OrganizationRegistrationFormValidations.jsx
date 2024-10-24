@@ -3,7 +3,7 @@ export function OrganizationRegistrationFormValidations(data) {
   
     const {
       organizationName,
-      organizationEmail,
+      email,
       organizationOwner,
       password,
       contactNumber,
@@ -21,9 +21,9 @@ export function OrganizationRegistrationFormValidations(data) {
       errors.push("Confirm password must be same as password");
   }
   
-    if (!organizationEmail) {
+    if (!email) {
       errors.push("Email is required");
-    } else if (!new RegExp(/\S+@\S+\.\S+/).test(organizationEmail)) {
+    } else if (!new RegExp(/\S+@\S+\.\S+/).test(email)) {
       errors.push("Incorrect email format");
     }
   
