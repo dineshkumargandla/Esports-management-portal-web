@@ -1,5 +1,5 @@
 // Contextual backgrounds
-@mixin bg-variant($parent, $color, $ignore-warning: true) {
+@mixin bg-variant($parent, $color) {
     #{$parent} {
         background-color: $color !important;
     }
@@ -14,17 +14,5 @@
 @mixin bg-gradient-variant($parent, $color) {
     #{$parent} {
         background: linear-gradient(87deg, $color 0, adjust-hue($color, 25%) 100%) !important;
-    }
-}
-
-@mixin bg-translucent-variant($parent, $color) {
-    #{$parent} {
-        background-color: darken(rgba($color, $translucent-color-opacity), 7%) !important;
-    }
-    a#{$parent},
-    button#{$parent} {
-        @include hover-focus {
-            background-color: darken(rgba($color, $translucent-color-opacity), 12%) !important;
-        }
     }
 }

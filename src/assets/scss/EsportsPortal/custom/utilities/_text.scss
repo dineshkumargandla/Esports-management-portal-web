@@ -15,14 +15,6 @@
 .text-through { text-decoration: line-through; }
 
 
-// Text size
-
-.text-xs { font-size: $font-size-xs !important; }
-.text-sm { font-size: $font-size-sm !important; }
-.text-lg { font-size: $font-size-lg !important; }
-.text-xl { font-size: $font-size-xl !important; }
-
-
 // Line heights
 
 .lh-100 { line-height: 1; }
@@ -35,15 +27,14 @@
 .lh-170 { line-height: 1.7; }
 .lh-180 { line-height: 1.8; }
 
+//Contextual colors
+
+.text-muted { color: $text-muted !important; }
+
+
 
 // Letter spacings
 
 .ls-1 { letter-spacing: .0625rem; }
 .ls-15 { letter-spacing: .09375rem; }
 .ls-2 { letter-spacing: 0.125rem; }
-
-// Color variations
-
-@each $color, $value in $colors {
-	@include text-emphasis-variant(".text-#{$color}", $value, $ignore-warning: true);
-}

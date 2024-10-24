@@ -5,19 +5,19 @@
 import {Login} from "./view/Pages/Login";
 import {UserRegistration} from "./view/Pages/UserRegistration";
 import {OrgRegistration} from "./view/Pages/OrgRegistration";
+import { Dashboard } from "./view/Pages/User/Dashboard";
 
 
 // import Tables from "views/Pages/Tables.js";
 // import Icons from "views/Pages/Icons.js";
 
 var routes = [
-  // {
-  //   path: "/index",
-  //   name: "Dashboard",
-  //   icon: "ni ni-tv-2 text-primary",
-  //   component: <Index />,
-  //   layout: "/admin",
-  // },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    component: <Dashboard />,
+    layout: "/user",
+  },
   // {
   //   path: "/icons",
   //   name: "Icons",

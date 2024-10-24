@@ -1,6 +1,4 @@
-//
-// Spacing
-//
+// Spacing columns vertically
 
 .row.row-grid > [class*="col-"] + [class*="col-"] {
     margin-top: 3rem;
@@ -26,7 +24,6 @@
     margin-top: 3rem;
 }
 
-
 // Negative margins and paddings
 
 @media(min-width: 992px) {
@@ -34,7 +31,8 @@
     [class*="mr--"],
     [class*="mb--"],
     [class*="ml--"] {
-        
+        position: relative;
+        z-index: 5;
     }
 
 
