@@ -1,4 +1,3 @@
-
 import React from "react";
 import classNames from "classnames";
 
@@ -21,16 +20,18 @@ import {
   ModalHeader,
 } from "reactstrap";
 
-export function UserNavbar(props) {
+export function UserNavBar(props) {
   const [collapseOpen, setcollapseOpen] = React.useState(false);
   const [modalSearch, setmodalSearch] = React.useState(false);
   const [color, setcolor] = React.useState("navbar-transparent");
   React.useEffect(() => {
     window.addEventListener("resize", updateColor);
+    // Specify how to clean up after this effect:
     return function cleanup() {
       window.removeEventListener("resize", updateColor);
     };
   });
+  // function that adds color white/transparent to the navbar on resize (this is for the collapse)
   const updateColor = () => {
     if (window.innerWidth < 993 && collapseOpen) {
       setcolor("bg-white");
@@ -38,6 +39,7 @@ export function UserNavbar(props) {
       setcolor("navbar-transparent");
     }
   };
+  // this function opens and closes the collapse on small devices
   const toggleCollapse = () => {
     if (collapseOpen) {
       setcolor("navbar-transparent");
@@ -46,6 +48,7 @@ export function UserNavbar(props) {
     }
     setcollapseOpen(!collapseOpen);
   };
+  // this function is to open the Search modal
   const toggleModalSearch = () => {
     setmodalSearch(!modalSearch);
   };
@@ -129,7 +132,7 @@ export function UserNavbar(props) {
                   onClick={(e) => e.preventDefault()}
                 >
                   <div className="photo">
-                    <img alt="..." src={require("../../assets/img/anime3.png")} />
+                    <img alt="..." src={require("assets/img/anime3.png")} />
                   </div>
                   <b className="caret d-none d-lg-block d-xl-block" />
                   <p className="d-lg-none">Log out</p>

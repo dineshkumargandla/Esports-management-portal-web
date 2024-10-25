@@ -1,3 +1,4 @@
+
 @font-face {
   font-family: 'Nucleo';
   src: url('../fonts/nucleo.eot');
@@ -5,6 +6,10 @@
   font-weight: normal;
   font-style: normal;
 }
+
+/*------------------------
+	base class definition
+-------------------------*/
 
 .tim-icons {
   display: inline-block;
