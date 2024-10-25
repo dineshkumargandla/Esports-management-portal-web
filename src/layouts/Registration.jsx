@@ -3,9 +3,10 @@ import { useLocation, Route, Routes, Navigate } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 
 import {AuthNavbar} from "../components/Navbars/AuthNavbar.jsx";
-import {AuthFooter} from "../components/Footers/AuthFooter.jsx";
+// import {AuthFooter} from "../components/Footers/AuthFooter.jsx";
 
-import routes from "routes.jsx";
+
+import authRoutes from "../routes/AuthRoutes.jsx";
 
 export const Registration = (props) => {
   const mainContent = React.useRef(null);
@@ -23,8 +24,8 @@ export const Registration = (props) => {
     mainContent.current.scrollTop = 0;
   }, [location]);
 
-  const getRoutes = (routes) => {
-    return routes.map((prop, key) => {
+  const getRoutes = (authRoutes) => {
+    return authRoutes.map((prop, key) => {
       if (prop.layout === "/registration") {
         return (
           <Route path={prop.path} element={prop.component} key={key} exact />
@@ -71,13 +72,13 @@ export const Registration = (props) => {
         <Container className="mt--8 pb-5">
           <Row className="justify-content-center">
             <Routes>
-              {getRoutes(routes)}
+              {getRoutes(authRoutes)}
               <Route path="*" element={<Navigate to="/auth/login" replace />} />
             </Routes>
           </Row>
         </Container>
       </div>
-      <AuthFooter />
+      {/* <AuthFooter /> */}
     </>
   );
 };
