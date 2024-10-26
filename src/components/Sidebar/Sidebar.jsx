@@ -14,7 +14,7 @@ var ps;
 export function Sidebar(props) {
   const location = useLocation();
   const sidebarRef = React.useRef(null);
-  // verifies if routeName is the one active (in browser input)
+
   const activeRoute = (routeName) => {
     return location.pathname === routeName ? "active" : "";
   };
@@ -35,7 +35,7 @@ export function Sidebar(props) {
   const linkOnClick = () => {
     document.documentElement.classList.remove("nav-open");
   };
-  const { routes, rtlActive, logo } = props;
+  const { routes, logo } = props;
   let logoImg = null;
   let logoText = null;
   if (logo !== undefined) {
@@ -111,8 +111,8 @@ export function Sidebar(props) {
                       className="nav-link"
                       onClick={props.toggleSidebar}
                     >
-                      <i className={prop.icon} />
-                      <p>{rtlActive ? prop.rtlName : prop.name}</p>
+                     <i> {prop.icon} </i>
+                      <p>{prop.name}</p>
                     </NavLink>
                   </li>
                 );
