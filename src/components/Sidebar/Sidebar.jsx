@@ -7,7 +7,7 @@ import { Nav, NavLink as ReactstrapNavLink } from "reactstrap";
 import {
   BackgroundColorContext,
   backgroundColors,
-} from "contexts/BackgroundColorContext";
+} from "Contexts/BackgroundColorContext";
 
 var ps;
 

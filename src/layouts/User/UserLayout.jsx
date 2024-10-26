@@ -7,7 +7,7 @@ import FixedPlugin from "components/FixedPlugin/FixedPlugin";
 
 import userRoutes from "../../routes/UserRoutes";
 import logo from "assets/img/Esports.png";
-import { BackgroundColorContext } from "contexts/BackgroundColorContext";
+import { BackgroundColorContext } from "Contexts/BackgroundColorContext";
 
 var ps;
 
