@@ -101,9 +101,6 @@ export const Login = () => {
       GetUserDetails(loginFormData.email)
         .then((response) => {
           localStorage.setItem("userProfileData", JSON.stringify(response));
-          console.log("............................");
-          console.log(localStorage.getItem("userProfileData"));
-          console.log("............................");
           navigate("/user/dashboard");
         })
         .catch((error) => {

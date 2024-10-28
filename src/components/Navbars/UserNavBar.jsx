@@ -20,6 +20,12 @@ import {
   ModalHeader,
 } from "reactstrap";
 
+import {
+  InfoOutlined,
+  LogoutOutlined,
+  LoginOutlined,
+} from "@mui/icons-material";
+
 export function UserNavBar(props) {
   const [collapseOpen, setcollapseOpen] = React.useState(false);
   const [modalSearch, setmodalSearch] = React.useState(false);
@@ -135,9 +141,19 @@ export function UserNavBar(props) {
                     <img alt="..." src={require("assets/img/anime3.png")} />
                   </div>
                   <b className="caret d-none d-lg-block d-xl-block" />
-                  <p className="d-lg-none">Log out</p>
+                  <p className="d-lg-none">Profile and Settings</p>
                 </DropdownToggle>
                 <DropdownMenu className="dropdown-navbar" right tag="ul">
+                  <p tag="li">
+                    <DropdownItem className="nav-item">
+                      <InfoOutlined fontSize="small" className="mr-2" />
+                      {
+                        JSON.parse(localStorage.getItem("userProfileData"))
+                          .warCode
+                      }
+                    </DropdownItem>
+                  </p>
+                  <DropdownItem divider tag="li" />
                   <NavLink tag="li">
                     <DropdownItem className="nav-item">Profile</DropdownItem>
                   </NavLink>
@@ -146,7 +162,10 @@ export function UserNavBar(props) {
                   </NavLink>
                   <DropdownItem divider tag="li" />
                   <NavLink tag="li">
-                    <DropdownItem className="nav-item">Log out</DropdownItem>
+                    <DropdownItem className="nav-item">
+                      <LogoutOutlined fontSize="small" className="mr-2" />
+                      Log out
+                    </DropdownItem>
                   </NavLink>
                 </DropdownMenu>
               </UncontrolledDropdown>
