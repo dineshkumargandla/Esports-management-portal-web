@@ -1,4 +1,3 @@
-
 import React from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { PropTypes } from "prop-types";
@@ -9,6 +8,11 @@ import {
   backgroundColors,
 } from "Contexts/BackgroundColorContext";
 
+import {
+  InfoOutlined,
+  LogoutOutlined,
+  LoginOutlined,
+} from "@mui/icons-material";
 var ps;
 
 export function Sidebar(props) {
@@ -16,6 +20,10 @@ export function Sidebar(props) {
   const sidebarRef = React.useRef(null);
   const role = localStorage.getItem("userRole");
   const authToken = localStorage.getItem("authToken");
+  const profileCode = JSON.parse(
+    localStorage.getItem("userProfileData")
+  ).warCode;
+  const fullName = JSON.parse(localStorage.getItem("userProfileData")).fullName;
 
   const activeRoute = (routeName) => {
     return location.pathname === routeName ? "active" : "";
@@ -98,27 +106,45 @@ export function Sidebar(props) {
                 {logoText}
               </div>
             ) : null}
+
+            {fullName !== null || role !== null ? (
+              <div className="logo">
+                <h4 className="text-center">Welcome, {fullName}</h4>
+                <h5 className="text-center">{role}</h5>
+              </div>
+            ) : null}
+
             <Nav>
               {routes.map((prop, key) => {
                 if (prop.redirect) return null;
                 return (
                   <li
-                    className={
-                      activeRoute(prop.path) + (prop.pro ? " active-pro" : "")
-                    }
-                    key={key}
+                  //   className={
+                  //     activeRoute(prop.path) + (prop.pro ? " active-pro" : "")
+                  //   }
+                  //   key={key}
+                  // >
                   >
                     <NavLink
                       to={prop.layout + prop.path}
                       className="nav-link"
                       onClick={props.toggleSidebar}
                     >
-                     <i> {prop.icon} </i>
+                      <i> {prop.icon} </i>
                       <p>{prop.name}</p>
                     </NavLink>
                   </li>
                 );
               })}
+              <li className="logoutMenu">
+                <NavLink className="nav-link">
+                  <i>
+                    {" "}
+                    <LogoutOutlined />{" "}
+                  </i>
+                  <p>Logout</p>
+                </NavLink>
+              </li>
             </Nav>
           </div>
         </div>

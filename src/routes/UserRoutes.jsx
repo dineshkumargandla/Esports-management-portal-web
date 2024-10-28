@@ -1,4 +1,5 @@
-import { UserDashboard } from "../views/UserDashboard";
+import { UserDashboard } from "../views/Pages/User/UserDashboard";
+import {UserProfile} from "../views/Pages/User/UserProfile";
 
 import {
   Person2Outlined,
@@ -22,10 +23,10 @@ var userRoutes  = [
     layout: "/user",
   },
   {
-    path: "#",
+    path: "/profile",
     name: "User profile",
     icon: <Person2Outlined/>,
-   // component: <UserDashboard />,
+    component: <UserProfile />,
     layout: "/user",
   },
 ];
