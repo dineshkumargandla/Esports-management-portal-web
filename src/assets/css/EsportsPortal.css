@@ -7867,6 +7867,10 @@ button.bg-darker:focus {
   float: right !important;
 }
 
+.float-center {
+  right: 10px !important;
+}
+
 .float-none {
   float: none !important;
 }
