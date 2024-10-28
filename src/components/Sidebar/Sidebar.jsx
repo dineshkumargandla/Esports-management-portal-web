@@ -14,6 +14,8 @@ var ps;
 export function Sidebar(props) {
   const location = useLocation();
   const sidebarRef = React.useRef(null);
+  const role = localStorage.getItem("userRole");
+  const authToken = localStorage.getItem("authToken");
 
   const activeRoute = (routeName) => {
     return location.pathname === routeName ? "active" : "";

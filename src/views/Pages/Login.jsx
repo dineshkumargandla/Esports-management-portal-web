@@ -14,8 +14,12 @@ import Divider from "@mui/material/Divider";
 import { LoginFormValidations } from "../Validations/LoginFormValidations.jsx";
 import { useNavigate } from "react-router-dom";
 import { ModelPopUp } from "../../Common/ModelPopupErrorValidation.jsx";
-import { validateUserLoginAuth,ValidateOrgLoginAuth } from "../../api/LoginAuthEndpoints";
+import {
+  validateUserLoginAuth,
+  ValidateOrgLoginAuth,
+} from "../../api/LoginAuthEndpoints";
 
+import { GetUserDetails } from "../../api/UserServiceEndpoint";
 const UserLoginButton = styled(Button)(({ theme }) => ({
   disableElevation: true,
   color: theme.palette.getContrastText(deepOrange[500]),
@@ -47,12 +51,10 @@ export const Login = () => {
   const [password, setPassword] = React.useState();
   const [errorMessages, setErrorMessage] = React.useState(new Array());
   const [modalShow, setModalShow] = React.useState(false);
-  const [jwtToken, setToken] = React.useState("");
   const navigate = useNavigate();
   let formErrors = new Array();
   let authValidationErrors = new Array();
   let authToken = "";
-
   const handleEmail = (event) => {
     setEmail(event.target.value);
   };
@@ -68,12 +70,11 @@ export const Login = () => {
       setErrorMessage(formErrors);
       setModalShow(true);
     } else {
-      console.log(loginFormData);
       validateUserLoginAuth(loginFormData)
         .then((response) => {
           authToken = response.token;
           localStorage.setItem("authToken", authToken);
-          localStorage.setItem("role", response.role);
+          localStorage.setItem("userRole", response.role);
         })
         .catch((error) => {
           setModalShow(true);
@@ -94,6 +95,37 @@ export const Login = () => {
             authValidationErrors.push("Backend Service not found");
           }
           setErrorMessage(authValidationErrors);
+        });
+    }
+    if (localStorage.getItem("authToken") !== null) {
+      GetUserDetails(loginFormData.email)
+        .then((response) => {
+          localStorage.setItem("userProfileData", JSON.stringify(response));
+          console.log("............................");
+          console.log(localStorage.getItem("userProfileData"));
+          console.log("............................");
+          navigate("/user/dashboard");
+        })
+        .catch((error) => {
+          console.log(error);
+          // setModalShow(true);
+          // if (error.status === 401) {
+          //   authValidationErrors.push(
+          //     "Invalid Credentials,please check the credentials and try again"
+          //   );
+          // }
+          // if (error.status === 404) {
+          //   authValidationErrors.push(
+          //     "User " +
+          //       loginFormData.email +
+          //       " not found in the data base, Please register and try again."
+          //   );
+          // }
+
+          // if (error.status === 500) {
+          //   authValidationErrors.push("Backend Service not found");
+          // }
+          // setErrorMessage(authValidationErrors);
         });
     }
   }

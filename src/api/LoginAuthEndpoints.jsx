@@ -3,7 +3,7 @@ const BASE_URL = "http://localhost:8080";
 
 export const validateUserLoginAuth = async (data) => {
     const response = await axios.post(`${BASE_URL}/user/login`, data);
-    return response;
+    return response.data;
 }
 export const ValidateOrgLoginAuth = async (data) => {
     const response = await axios.post(`${BASE_URL}/org/login`, data);
