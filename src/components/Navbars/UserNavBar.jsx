@@ -25,19 +25,24 @@ import {
   LogoutOutlined,
   LoginOutlined,
 } from "@mui/icons-material";
-
+import { useNavigate } from "react-router-dom";
 export function UserNavBar(props) {
   const [collapseOpen, setcollapseOpen] = React.useState(false);
   const [modalSearch, setmodalSearch] = React.useState(false);
   const [color, setcolor] = React.useState("navbar-transparent");
+  const navigate = useNavigate();
+  let code = JSON.parse(localStorage.getItem("userProfileData"))
+  .warCode
+
+  if(code == null){
+    code = "";
+  }
   React.useEffect(() => {
     window.addEventListener("resize", updateColor);
-    // Specify how to clean up after this effect:
     return function cleanup() {
       window.removeEventListener("resize", updateColor);
     };
   });
-  // function that adds color white/transparent to the navbar on resize (this is for the collapse)
   const updateColor = () => {
     if (window.innerWidth < 993 && collapseOpen) {
       setcolor("bg-white");
@@ -58,6 +63,12 @@ export function UserNavBar(props) {
   const toggleModalSearch = () => {
     setmodalSearch(!modalSearch);
   };
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/auth/login");
+  };
+
   return (
     <>
       <Navbar className={classNames("navbar-absolute", color)} expand="lg">
@@ -148,9 +159,9 @@ export function UserNavBar(props) {
                     <DropdownItem className="nav-item">
                       <InfoOutlined fontSize="small" className="mr-2" />
                       {
-                        JSON.parse(localStorage.getItem("userProfileData"))
-                          .warCode
+                        code
                       }
+                    
                     </DropdownItem>
                   </p>
                   <DropdownItem divider tag="li" />
@@ -162,7 +173,8 @@ export function UserNavBar(props) {
                   </NavLink>
                   <DropdownItem divider tag="li" />
                   <NavLink tag="li">
-                    <DropdownItem className="nav-item">
+                    <DropdownItem className="nav-item"
+                    onClick={handleLogout}>
                       <LogoutOutlined fontSize="small" className="mr-2" />
                       Log out
                     </DropdownItem>
