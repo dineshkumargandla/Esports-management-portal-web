@@ -7,7 +7,7 @@ import {
   BackgroundColorContext,
   backgroundColors,
 } from "Contexts/BackgroundColorContext";
-
+import { useNavigate } from "react-router-dom";
 import {
   InfoOutlined,
   LogoutOutlined,
@@ -24,7 +24,7 @@ export function Sidebar(props) {
     localStorage.getItem("userProfileData")
   ).warCode;
   const fullName = JSON.parse(localStorage.getItem("userProfileData")).fullName;
-
+  const navigate = useNavigate();
   const activeRoute = (routeName) => {
     return location.pathname === routeName ? "active" : "";
   };
@@ -42,6 +42,10 @@ export function Sidebar(props) {
       }
     };
   });
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/auth/login");
+  };
   const linkOnClick = () => {
     document.documentElement.classList.remove("nav-open");
   };
@@ -136,7 +140,7 @@ export function Sidebar(props) {
                   </li>
                 );
               })}
-              <li className="logoutMenu">
+              <li className="logoutMenu" onClick={handleLogout}>
                 <NavLink className="nav-link">
                   <i>
                     {" "}
