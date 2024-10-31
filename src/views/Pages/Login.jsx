@@ -20,6 +20,8 @@ import {
 } from "../../api/LoginAuthEndpoints";
 
 import { GetUserDetails } from "../../api/UserServiceEndpoint";
+import { GetOrganizationDetails } from "../../api/OrganizationServiceEndpoint.jsx";
+
 const UserLoginButton = styled(Button)(({ theme }) => ({
   disableElevation: true,
   color: theme.palette.getContrastText(deepOrange[500]),
@@ -159,6 +161,34 @@ export const Login = () => {
             authValidationErrors.push("Backend Service not found");
           }
           setErrorMessage(authValidationErrors);
+        });
+    }
+    if (localStorage.getItem("authToken") !== null) {
+      GetOrganizationDetails(loginFormData.email)
+        .then((response) => {
+          localStorage.setItem("userProfileData", JSON.stringify(response));
+          navigate("/organization/dashboard");
+        })
+        .catch((error) => {
+          console.log(error);
+          // setModalShow(true);
+          // if (error.status === 401) {
+          //   authValidationErrors.push(
+          //     "Invalid Credentials,please check the credentials and try again"
+          //   );
+          // }
+          // if (error.status === 404) {
+          //   authValidationErrors.push(
+          //     "User " +
+          //       loginFormData.email +
+          //       " not found in the data base, Please register and try again."
+          //   );
+          // }
+
+          // if (error.status === 500) {
+          //   authValidationErrors.push("Backend Service not found");
+          // }
+          // setErrorMessage(authValidationErrors);
         });
     }
   }

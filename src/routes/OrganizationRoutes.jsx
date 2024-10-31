@@ -1,4 +1,6 @@
 import {OrganizationDashboard} from "../views/Pages/Organization/OrganizationDashboard";
+import {OrganizationProfile} from "../views/Pages/Organization/OrganizationProfile";
+
 
 import {
   Person2Outlined,
@@ -24,9 +26,9 @@ var organizationRoutes  = [
   },
   {
     path: "/profile",
-    name: "Organiization profile",
+    name: "profile",
     icon: <Person2Outlined/>,
-    component: <OrganizationDashboard />,
+    component: <OrganizationProfile />,
     layout: "/organization",
   },
   {
