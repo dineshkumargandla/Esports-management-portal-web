@@ -110,14 +110,6 @@ export function Sidebar(props) {
                 {logoText}
               </div>
             ) : null}
-
-            {fullName !== null || role !== null ? (
-              <div className="logo">
-                <h4 className="text-center">Welcome, {fullName}</h4>
-                <h5 className="text-center">{role}</h5>
-              </div>
-            ) : null}
-
             <Nav>
               {routes.map((prop, key) => {
                 if (prop.redirect) return null;
