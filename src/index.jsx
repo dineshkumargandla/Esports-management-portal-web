@@ -13,6 +13,8 @@ import {BackgroundColorWrapper} from "./components/BackgroundColorWrapper/Backgr
 import { Auth } from "./layouts/Auth.jsx";
 import { Registration } from "./layouts/Registration.jsx";
 import { OrganizationLayout } from "./layouts/Organization/OrganizationLayout";
+import { AdminLayout } from "./layouts/Admin/AdminLayout";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -25,6 +27,7 @@ root.render(
         <Route path="/registration/*" element={<Registration />} />
           <Route path="/user/*" element={<UserLayout />} />
           <Route path="/organization/*" element={<OrganizationLayout />} />
+          <Route path="/admin/*" element={<AdminLayout />} />
           <Route
             path="*"
             element={<Navigate to="/auth/login" replace />}
