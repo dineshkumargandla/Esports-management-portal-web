@@ -7,15 +7,25 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { Card, CardHeader, CardTitle, Row, Col, Table } from "reactstrap";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  Row,
+  Col,
+  Table,
+  Button,
+  FormGroup,
+  Input,
+} from "reactstrap";
 import { GetAllOrganizationDetails } from "../../../api/OrganizationServiceEndpoint";
-
+import { PersonSearch } from "@mui/icons-material";
 export function OrganizationList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [search, setSearch] = React.useState("");
   let dataCount = 0;
-  
-
+  let searchButtonState = false;
 
   React.useEffect(() => {
     GetAllOrganizationDetails()
@@ -50,6 +60,15 @@ export function OrganizationList() {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  };
+
+  const handleSearchText = (event) => {
+    setSearch(event.target.value);
+  };
+
+  const handleSearchFilter = (event) => {
+    console.log(search);
+    searchButtonState = true;
   };
 
   const columns = [
@@ -107,8 +126,6 @@ export function OrganizationList() {
       );
     }),
   ];
-
-  console.log(rows);
   return (
     <>
       <div className="content">
@@ -117,6 +134,27 @@ export function OrganizationList() {
             <Card>
               <CardHeader>
                 <CardTitle tag="h4">Organization List</CardTitle>
+                <Row>
+                  <Col className="pr-md-1" md="6"></Col>
+                  <Col className="pl-md-2" md="4">
+                    <FormGroup>
+                      <Input
+                        placeholder="Search Organization"
+                        type="search"
+                        value={search}
+                        onChange={handleSearchText}
+                      ></Input>
+                    </FormGroup>
+                  </Col>
+                  <Col className="pr-md-1">
+                    <Button
+                      className="btn-icon btn-round"
+                      onClick={handleSearchFilter}
+                    >
+                      <PersonSearch />
+                    </Button>
+                  </Col>
+                </Row>
               </CardHeader>
               <Paper
                 sx={{
@@ -125,7 +163,6 @@ export function OrganizationList() {
                   "background-color": "transparent",
                 }}
               >
-                {/* <TableContainer sx={{ maxHeight: 3000 }}> */}
                 <TableContainer>
                   <Table className="tablesorter" responsive>
                     <TableHead className="text-primary">
@@ -142,17 +179,21 @@ export function OrganizationList() {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {rows
-                        .map((row) => {
-                          return row
+                      {rows.map((row) => {
+                        return row
                           .slice(
                             page * rowsPerPage,
                             page * rowsPerPage + rowsPerPage
-                          ).map((item) => {
-                            dataCount =row.length;
+                          )
+                          .map((item) => {
+                            dataCount = row.length;
                             return (
                               <TableRow hover role="table" tabIndex={-1}>
                                 {columns.map((column) => {
+                                  if (searchButtonState) {
+                                    console.log(search);
+                                    console.log(item[column.id]);
+                                  }
                                   const value = item[column.id];
                                   return (
                                     <TableCell
@@ -160,18 +201,22 @@ export function OrganizationList() {
                                       align={column.align}
                                     >
                                       {value}
+                                      {/* {searchButtonState && value.toLowerCase().includes(search.toLowerCase()) ? value : null} */}
+                                      {/* {column.format && typeof value === 'number'
+                            ? column.format(value)
+                            : value} */}
                                     </TableCell>
                                   );
                                 })}
                               </TableRow>
                             );
                           });
-                        })}
+                      })}
                     </TableBody>
                   </Table>
                 </TableContainer>
                 <TablePagination
-                  rowsPerPageOptions={[10, 25, 50,100]}
+                  rowsPerPageOptions={[10, 25, 50, 100]}
                   component="div"
                   count={dataCount}
                   rowsPerPage={rowsPerPage}
