@@ -104,24 +104,24 @@ export const Login = () => {
     }
     if (localStorage.getItem("authToken") !== null) {
       let role = localStorage.getItem("userRole");
-      GetUserDetails(loginFormData.email)
-          .then((response) => {
-            localStorage.setItem("userProfileData", JSON.stringify(response));
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+     
       if (role === "User") {
+        GetUserDetails(loginFormData.email)
+        .then((response) => {
+          localStorage.setItem("userProfileData", JSON.stringify(response));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
             navigate("/user/dashboard");
       } else if (role === "Admin") {
-        GetAllOrganizationDetails()
-          .then((response) => {
-            localStorage.setItem(
-              "allOrganizationData",
-              JSON.stringify(response)
-            );
-          })
-          .catch((error) => {});
+        GetUserDetails(loginFormData.email)
+        .then((response) => {
+          localStorage.setItem("userProfileData", JSON.stringify(response));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
         navigate("/admin/dashboard");
       } else if (role === "Organization") {
         GetOrganizationDetails(loginFormData.email).then((response) => {
@@ -129,17 +129,14 @@ export const Login = () => {
             "organizationProfileData",
             JSON.stringify(response)
           );
+          const isOrgApproved = response.isApproved;
+          const isOrgRejected = response.isRejected;
+          if (isOrgApproved === 1 && isOrgRejected === 0) {
           navigate("/organization/dashboard");
+          }else{
+            console.log("Organization not approved yet, or rejected by admin");
+          }
         });
-        GetUserDetails(loginFormData.email)
-          .then((response) => {
-            localStorage.setItem("userProfileData", JSON.stringify(response));
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      } else {
-        console.log("error");
       }
     }
   }
