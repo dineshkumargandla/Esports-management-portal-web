@@ -122,6 +122,13 @@ export const Login = () => {
         .catch((error) => {
           console.log(error);
         });
+        GetAllOrganizationDetails()
+        .then((response) => {
+          localStorage.setItem("allOrganizationData", JSON.stringify(response));
+        })
+        .catch((error) => {
+          console.log(error);
+        })
         navigate("/admin/dashboard");
       } else if (role === "Organization") {
         GetOrganizationDetails(loginFormData.email).then((response) => {

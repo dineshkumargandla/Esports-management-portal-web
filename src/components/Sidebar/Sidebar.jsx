@@ -18,12 +18,6 @@ var ps;
 export function Sidebar(props) {
   const location = useLocation();
   const sidebarRef = React.useRef(null);
-  const role = localStorage.getItem("userRole");
-  const authToken = localStorage.getItem("authToken");
-  const profileCode = JSON.parse(
-    localStorage.getItem("userProfileData")
-  ).warCode;
-  const fullName = JSON.parse(localStorage.getItem("userProfileData")).fullName;
   const navigate = useNavigate();
   const activeRoute = (routeName) => {
     return location.pathname === routeName ? "active" : "";

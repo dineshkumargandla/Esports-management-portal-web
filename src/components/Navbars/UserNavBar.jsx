@@ -31,12 +31,7 @@ export function UserNavBar(props) {
   const [modalSearch, setmodalSearch] = React.useState(false);
   const [color, setcolor] = React.useState("navbar-transparent");
   const navigate = useNavigate();
-  let code = JSON.parse(localStorage.getItem("userProfileData"))
-  .warCode
-
-  if(code == null){
-    code = "";
-  }
+ 
   React.useEffect(() => {
     window.addEventListener("resize", updateColor);
     return function cleanup() {
@@ -158,9 +153,9 @@ export function UserNavBar(props) {
                   <p tag="li">
                     <DropdownItem className="nav-item">
                       <InfoOutlined fontSize="small" className="mr-2" />
-                      {
+                      
                         code
-                      }
+                      
                     
                     </DropdownItem>
                   </p>
