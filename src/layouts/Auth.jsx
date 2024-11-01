@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation, Route, Routes, Navigate } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 
-import {AuthNavbar} from "../components/Navbars/AuthNavbar.jsx";
+import { AuthNavbar } from "../components/Navbars/AuthNavbar.jsx";
 // import {AuthFooter} from "../components/Footers/AuthFooter.jsx";
 
 import authRoutes from "../routes/AuthRoutes.jsx";
@@ -13,6 +13,8 @@ export const Auth = (props) => {
 
   React.useEffect(() => {
     document.body.classList.add("bg-default");
+    localStorage.clear();
+
     return () => {
       document.body.classList.remove("bg-default");
     };
@@ -83,4 +85,3 @@ export const Auth = (props) => {
     </>
   );
 };
-

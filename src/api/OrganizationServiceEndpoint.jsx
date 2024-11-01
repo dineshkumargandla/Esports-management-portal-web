@@ -15,3 +15,14 @@ export const GetOrganizationDetails = async (data) => {
   return response.data;
 }
 
+export const GetAllOrganizationDetails = async () => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  };
+  const response = await axios.get(`${BASE_URL}/org/all`, config);
+  return response.data;
+}
+

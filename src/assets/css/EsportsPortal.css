@@ -7858,7 +7858,9 @@ button.bg-darker:focus {
     align-self: stretch !important;
   }
 }
-
+.tbodyclass{
+  background-color: transparent;
+}
 .float-left {
   float: left !important;
 }
@@ -16114,7 +16116,9 @@ hr {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
-
+.css-74q7kj-MuiPaper-root{
+  background-color: transparent;
+}
 .table > tbody > tr > td {
   color: rgba(255, 255, 255, 0.7) !important;
 }
