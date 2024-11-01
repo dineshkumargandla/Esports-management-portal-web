@@ -10,7 +10,7 @@ import {
 
 var adminRoutes = [
   {
-    path: "#",
+    path: "/dashboard",
     name: "Dashboard",
     icon: <Newspaper />,
     component: <OrganizationDashboard />,

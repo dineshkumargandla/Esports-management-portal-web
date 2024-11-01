@@ -20,7 +20,10 @@ import {
 } from "../../api/LoginAuthEndpoints";
 
 import { GetUserDetails } from "../../api/UserServiceEndpoint";
-import { GetOrganizationDetails } from "../../api/OrganizationServiceEndpoint.jsx";
+import {
+  GetOrganizationDetails,
+  GetAllOrganizationDetails,
+} from "../../api/OrganizationServiceEndpoint.jsx";
 
 const UserLoginButton = styled(Button)(({ theme }) => ({
   disableElevation: true,
@@ -100,32 +103,44 @@ export const Login = () => {
         });
     }
     if (localStorage.getItem("authToken") !== null) {
-      GetUserDetails(loginFormData.email)
-        .then((response) => {
-          localStorage.setItem("userProfileData", JSON.stringify(response));
-          navigate("/user/dashboard");
-        })
-        .catch((error) => {
-          console.log(error);
-          // setModalShow(true);
-          // if (error.status === 401) {
-          //   authValidationErrors.push(
-          //     "Invalid Credentials,please check the credentials and try again"
-          //   );
-          // }
-          // if (error.status === 404) {
-          //   authValidationErrors.push(
-          //     "User " +
-          //       loginFormData.email +
-          //       " not found in the data base, Please register and try again."
-          //   );
-          // }
-
-          // if (error.status === 500) {
-          //   authValidationErrors.push("Backend Service not found");
-          // }
-          // setErrorMessage(authValidationErrors);
+      let role = localStorage.getItem("userRole");
+      if (role === "User") {
+        GetUserDetails(loginFormData.email)
+          .then((response) => {
+            localStorage.setItem("userProfileData", JSON.stringify(response));
+            navigate("/user/dashboard");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else if (role === "Admin") {
+        GetAllOrganizationDetails()
+          .then((response) => {
+            localStorage.setItem(
+              "allOrganizationData",
+              JSON.stringify(response)
+            );
+          })
+          .catch((error) => {});
+        navigate("/admin/dashboard");
+      } else if (role === "Organization") {
+        GetOrganizationDetails(loginFormData.email).then((response) => {
+          localStorage.setItem(
+            "organizationProfileData",
+            JSON.stringify(response)
+          );
+          navigate("/organization/dashboard");
         });
+        GetUserDetails(loginFormData.email)
+          .then((response) => {
+            localStorage.setItem("userProfileData", JSON.stringify(response));
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        console.log("error");
+      }
     }
   }
 
@@ -171,24 +186,6 @@ export const Login = () => {
         })
         .catch((error) => {
           console.log(error);
-          // setModalShow(true);
-          // if (error.status === 401) {
-          //   authValidationErrors.push(
-          //     "Invalid Credentials,please check the credentials and try again"
-          //   );
-          // }
-          // if (error.status === 404) {
-          //   authValidationErrors.push(
-          //     "User " +
-          //       loginFormData.email +
-          //       " not found in the data base, Please register and try again."
-          //   );
-          // }
-
-          // if (error.status === 500) {
-          //   authValidationErrors.push("Backend Service not found");
-          // }
-          // setErrorMessage(authValidationErrors);
         });
     }
   }

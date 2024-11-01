@@ -28,29 +28,7 @@ export function OrganizationList() {
   let searchButtonState = false;
 
   React.useEffect(() => {
-    GetAllOrganizationDetails()
-      .then((response) => {
-        localStorage.setItem("allOrganizationData", JSON.stringify(response));
-      })
-      .catch((error) => {
-        // setModalShow(true);
-        // if (error.status === 401) {
-        //   authValidationErrors.push(
-        //     "Invalid Credentials,please check the credentials and try again"
-        //   );
-        // }
-        // if (error.status === 404) {
-        //   authValidationErrors.push(
-        //     "User " +
-        //       loginFormData.email +
-        //       " not found in the data base, Please register and try again."
-        //   );
-        // }
-        // if (error.status === 500) {
-        //   authValidationErrors.push("Backend Service not found");
-        // }
-        // setErrorMessage(authValidationErrors);
-      });
+
   });
 
   const handleChangePage = (event, newPage) => {
