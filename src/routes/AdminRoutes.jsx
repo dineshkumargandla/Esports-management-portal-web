@@ -1,44 +1,42 @@
-import {OrganizationDashboard} from "../views/Pages/Organization/OrganizationDashboard";
-import {OrganizationProfile} from "../views/Pages/Organization/OrganizationProfile";
-
+import { OrganizationDashboard } from "../views/Pages/Organization/OrganizationDashboard";
+import { OrganizationList } from "../views/Pages/Admin/OrganizationList";
 
 import {
   Person2Outlined,
   DashboardCustomizeTwoTone,
   Newspaper,
-  MultilineChart
+  MultilineChart,
 } from "@mui/icons-material";
 
-var adminRoutes  = [
+var adminRoutes = [
   {
     path: "#",
     name: "Dashboard",
-    icon: <Newspaper/>,
+    icon: <Newspaper />,
     component: <OrganizationDashboard />,
     layout: "/admin",
   },
   {
-    path: "/dashboard",
+    path: "/organizationList",
     name: "Organization List",
-    icon: <DashboardCustomizeTwoTone/>,
-    component: <OrganizationDashboard />,
+    icon: <DashboardCustomizeTwoTone />,
+    component: <OrganizationList />,
     layout: "/admin",
   },
   {
     path: "/profile",
     name: "Athletes List",
-    icon: <Person2Outlined/>,
+    icon: <Person2Outlined />,
     component: <OrganizationDashboard />,
     layout: "/admin",
   },
   {
     path: "/perfomance",
     name: "Oraganize a tournment",
-    icon: <MultilineChart/>,
+    icon: <MultilineChart />,
     component: <OrganizationDashboard />,
     layout: "/admin",
   },
 ];
 
 export default adminRoutes;
-
