@@ -104,15 +104,15 @@ export const Login = () => {
     }
     if (localStorage.getItem("authToken") !== null) {
       let role = localStorage.getItem("userRole");
-      if (role === "User") {
-        GetUserDetails(loginFormData.email)
+      GetUserDetails(loginFormData.email)
           .then((response) => {
             localStorage.setItem("userProfileData", JSON.stringify(response));
-            navigate("/user/dashboard");
           })
           .catch((error) => {
             console.log(error);
           });
+      if (role === "User") {
+            navigate("/user/dashboard");
       } else if (role === "Admin") {
         GetAllOrganizationDetails()
           .then((response) => {
