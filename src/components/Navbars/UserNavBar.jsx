@@ -18,6 +18,9 @@ import {
   Modal,
   NavbarToggler,
   ModalHeader,
+  Row,
+  Col,
+  FormGroup,
 } from "reactstrap";
 
 import {
@@ -187,7 +190,16 @@ export function UserNavBar(props) {
         toggle={toggleModalSearch}
       >
         <ModalHeader>
-          <Input placeholder="SEARCH" type="text" />
+        <Row>
+                  <Col className="pr-md-1" md="6">
+                  <Input placeholder="SEARCH 1" type="text" /></Col>
+                  <Col md="6">
+                    <FormGroup>
+                             <Input placeholder="SEARCH 2" type="text" />
+
+                    </FormGroup>
+                  </Col>
+                </Row>
           <button
             aria-label="Close"
             className="close"

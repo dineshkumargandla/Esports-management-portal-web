@@ -27,10 +27,6 @@ export function OrganizationList() {
   let dataCount = 0;
   let searchButtonState = false;
 
-  React.useEffect(() => {
-
-  });
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
