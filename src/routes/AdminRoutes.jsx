@@ -1,8 +1,10 @@
 import { OrganizationDashboard } from "../views/Pages/Organization/OrganizationDashboard";
 import { OrganizationList } from "../views/Pages/Admin/OrganizationList";
+import { OrganizationApprovalFlow } from "../views/Pages/Admin/OrganizationApprovalFlow";
+
 
 import {
-  Person2Outlined,
+  ApprovalOutlined,
   DashboardCustomizeTwoTone,
   Newspaper,
   MultilineChart,
@@ -24,10 +26,10 @@ var adminRoutes = [
     layout: "/admin",
   },
   {
-    path: "/profile",
-    name: "Athletes List",
-    icon: <Person2Outlined />,
-    component: <OrganizationDashboard />,
+    path: "/organizationApproval",
+    name: "Organization Approval",
+    icon: <ApprovalOutlined />,
+    component: <OrganizationApprovalFlow />,
     layout: "/admin",
   },
   {
