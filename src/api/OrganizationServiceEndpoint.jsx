@@ -48,3 +48,14 @@ export const GetAllPendingApprovalOrganizationDetails = async () => {
   return response.data;
 }
 
+export const ApproveOrganization = async (data) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  };
+  const response = await axios.put(`${BASE_URL}/org/approvalFlow`, data,config);
+  return response.data;
+}
+

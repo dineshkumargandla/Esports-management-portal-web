@@ -12,6 +12,8 @@ import {
 } from "reactstrap";
 
 import { EmojiEmotions, ThumbDown } from "@mui/icons-material";
+import {ApproveOrganization} from "../../../api/OrganizationServiceEndpoint";
+
 
 export function OrganizationApprovalFlow() {
   const [modalShow, setModalShow] = React.useState(false);
@@ -24,12 +26,37 @@ export function OrganizationApprovalFlow() {
     setModalShow(true);
     console.log("Row Clicked:", orgData);
     console.log("Row Clicked1:", item.organizationCode);
-
     console.log("Row Clicked2:", modalShow);
-
   };
 
+  const handleApproval = (item) => {
+    console.log("Button Clicked:", item.organizationCode);
+    let organizationCode = item.organizationCode;
+    let action = "Approved";
+    const approvalData = { organizationCode, action };
+    ApproveOrganization(approvalData)
+    .then((response) => {
+console.log("Response:", response);
+    })
+    .catch((error) => {
+      console.log("Error:", error);
+    });
+  };
 
+  const handleReject = (item) => {
+    console.log("Button Clicked:", item.organizationCode);
+    let organizationCode = item.organizationCode;
+    let action = "Rejected";
+    let comments = "Comment";
+    const approvalData = { organizationCode, action , comments};
+    ApproveOrganization(approvalData)
+    .then((response) => {
+      console.log("Response:", response);
+    })
+    .catch((error) => {
+      console.log("Error:", error);
+    });
+  };
 
   return (
     <>
@@ -58,8 +85,7 @@ export function OrganizationApprovalFlow() {
                     ).map((item) => {
                       return (
                         <tr
-                        onClick={() => handleRowClick(item)}
-                          
+                          onClick={() => handleRowClick(item)}
                           style={{ cursor: "pointer" }}
                         >
                           <td className="text-center">
@@ -78,18 +104,21 @@ export function OrganizationApprovalFlow() {
                               <Row>
                                 <Col className="pr-md-1" md="6">
                                   <Button
-                                    className="btn-icon btn-round sucess"
+                                    className="btn-icon btn-round"
                                     color="success"
                                     title="Approve"
+                                    onClick={() => handleApproval(item)}
+
                                   >
                                     <EmojiEmotions />
                                   </Button>
                                 </Col>
                                 <Col className="pl-md-2" md="4">
                                   <Button
-                                    className="btn-icon btn-round sucess"
+                                    className="btn-icon btn-round"
                                     color="danger"
                                     title="Reject"
+                                    onClick={() => handleReject(item)}
                                   >
                                     <ThumbDown />
                                   </Button>
