@@ -26,3 +26,25 @@ export const GetAllOrganizationDetails = async () => {
   return response.data;
 }
 
+export const GetAllApprovedOrganizationDetails = async () => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  };
+  const response = await axios.get(`${BASE_URL}/org/approved`, config);
+  return response.data;
+}
+
+export const GetAllPendingApprovalOrganizationDetails = async () => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  };
+  const response = await axios.get(`${BASE_URL}/org/pending-approved`, config);
+  return response.data;
+}
+

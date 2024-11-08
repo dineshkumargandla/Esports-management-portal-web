@@ -18,7 +18,6 @@ import {
   FormGroup,
   Input,
 } from "reactstrap";
-import { GetAllOrganizationDetails } from "../../../api/OrganizationServiceEndpoint";
 import { PersonSearch } from "@mui/icons-material";
 export function OrganizationList() {
   const [page, setPage] = React.useState(0);
@@ -90,7 +89,7 @@ export function OrganizationList() {
   }
 
   const rows = [
-    JSON.parse(localStorage.getItem("allOrganizationData")).map((item) => {
+    JSON.parse(localStorage.getItem("allApprovedOrganizationData")).map((item) => {
       return createData(
         item.organizationName,
         item.organizationCode,
