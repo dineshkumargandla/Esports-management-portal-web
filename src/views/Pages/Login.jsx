@@ -22,7 +22,8 @@ import {
 import { GetUserDetails } from "../../api/UserServiceEndpoint";
 import {
   GetOrganizationDetails,
-  GetAllOrganizationDetails,
+  GetAllApprovedOrganizationDetails,
+  GetAllPendingApprovalOrganizationDetails
 } from "../../api/OrganizationServiceEndpoint.jsx";
 
 const UserLoginButton = styled(Button)(({ theme }) => ({
@@ -122,9 +123,16 @@ export const Login = () => {
         .catch((error) => {
           console.log(error);
         });
-        GetAllOrganizationDetails()
+        GetAllApprovedOrganizationDetails()
         .then((response) => {
-          localStorage.setItem("allOrganizationData", JSON.stringify(response));
+          localStorage.setItem("allApprovedOrganizationData", JSON.stringify(response));
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        GetAllPendingApprovalOrganizationDetails()
+        .then((response) => {
+          localStorage.setItem("allPendingApprovalOrganizationData", JSON.stringify(response));
         })
         .catch((error) => {
           console.log(error);
