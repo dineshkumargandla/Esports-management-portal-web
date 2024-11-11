@@ -12,8 +12,7 @@ import {
 } from "reactstrap";
 
 import { EmojiEmotions, ThumbDown } from "@mui/icons-material";
-import {ApproveOrganization} from "../../../api/OrganizationServiceEndpoint";
-
+import { ApproveOrganization , GetAllPendingApprovalOrganizationDetails} from "../../../api/OrganizationServiceEndpoint";
 
 export function OrganizationApprovalFlow() {
   const [modalShow, setModalShow] = React.useState(false);
@@ -35,12 +34,21 @@ export function OrganizationApprovalFlow() {
     let action = "Approved";
     const approvalData = { organizationCode, action };
     ApproveOrganization(approvalData)
-    .then((response) => {
-console.log("Response:", response);
-    })
-    .catch((error) => {
-      console.log("Error:", error);
-    });
+      .then((response) => {
+        console.log("Response:", response);
+        GetAllPendingApprovalOrganizationDetails()
+        .then((response) => {
+          localStorage.removeItem("allPendingApprovalOrganizationData");
+          localStorage.setItem("allPendingApprovalOrganizationData", JSON.stringify(response));
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
   };
 
   const handleReject = (item) => {
@@ -48,14 +56,23 @@ console.log("Response:", response);
     let organizationCode = item.organizationCode;
     let action = "Rejected";
     let comments = "Comment";
-    const approvalData = { organizationCode, action , comments};
+    const approvalData = { organizationCode, action, comments };
     ApproveOrganization(approvalData)
-    .then((response) => {
-      console.log("Response:", response);
-    })
-    .catch((error) => {
-      console.log("Error:", error);
-    });
+      .then((response) => {
+        console.log("Response:", response);
+        GetAllPendingApprovalOrganizationDetails()
+        .then((response) => {
+          localStorage.removeItem("allPendingApprovalOrganizationData");
+          localStorage.setItem("allPendingApprovalOrganizationData", JSON.stringify(response));
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
   };
 
   return (
@@ -108,7 +125,6 @@ console.log("Response:", response);
                                     color="success"
                                     title="Approve"
                                     onClick={() => handleApproval(item)}
-
                                   >
                                     <EmojiEmotions />
                                   </Button>
